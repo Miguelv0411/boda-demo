@@ -235,6 +235,24 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
 
+  // --- EFECTO: AUTOLOGIN POR URL ---
+  useEffect(() => {
+    // Busca si en la URL existe ?admin=boda2025
+    const params = new URLSearchParams(window.location.search);
+    const adminParam = params.get('admin');
+
+    if (adminParam && adminParam.toLowerCase() === 'boda2025') {
+      setIsAdminAuthenticated(true);
+      setView('admin');
+      // Opcional: Limpia la URL para que no se quede la contraseña visible
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+    }
+  }, []);
+
   // --- EFECTO PARA TÍTULO Y FAVICON ---
   useEffect(() => {
     document.title = 'Boda Maria y David 2025';
